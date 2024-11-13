@@ -1,0 +1,2 @@
+- pip install Flask pyserial
+- .\venv\Scripts\Activate
