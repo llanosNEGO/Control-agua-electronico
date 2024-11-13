@@ -19,7 +19,6 @@
         </div>
     </div>
     <script>
-        // Función para enviar el comando al servidor
         function controlMotor(action) {
             fetch(`/control_motor`, {
                 method: 'POST',
@@ -41,7 +40,6 @@
             });
         }
 
-        // Función para actualizar los botones según el estado del motor
         function actualizarBotones(status) {
             if (status === 'Motor encendido') {
                 document.getElementById('btn-on').disabled = true;
@@ -52,7 +50,6 @@
             }
         }
 
-        // Obtener el estado inicial del motor
         function obtenerEstado() {
             fetch('/estado_motor')
             .then(response => response.json())
@@ -63,7 +60,6 @@
             .catch(error => console.error('Error:', error));
         }
 
-        // Llamar a la función obtenerEstado al cargar la página
         window.onload = obtenerEstado;
     </script>
 </body>
