@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def open_serial_port():
     try:
-        motor_serial = serial.Serial('COM3', 9600)
+        motor_serial = serial.Serial('COM4', 9600)
         time.sleep(2)  
         return motor_serial
     except serial.SerialException as e:
