@@ -1,0 +1,101 @@
+body {
+    background-image: url('../image/fondo_agua.jpg'); /* Ruta de la imagen de fondo */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.titulo {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.tanque {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.deposito {
+    height: 150px;
+    background-color: #1e90ff;
+    width: 50px;
+    margin: 0 auto;
+    position: relative;
+    border: 2px solid black;
+}
+
+.deposito::before {
+    content: '3L';
+    position: absolute;
+    top: 0;
+    left: 150%;
+    transform: translateX(-50%);
+    color: black;
+}
+
+.deposito::after {
+    content: '1L';
+    position: absolute;
+    bottom: 0;
+    left: 150%;
+    transform: translateX(-50%);
+    color: black;
+}
+
+.dato {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.col-md-6 {
+    flex: 1 1 48%;
+}
+
+.section-rigth {
+    flex: 1 1 48%;
+    max-width: 48%;
+    margin-top: 20px;
+}
+
+.bomba, .valvula {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px; /* Disminuye el tamaño del contenido interno */
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+    font-size: 0.9rem; /* Reduce el tamaño de fuente */
+    max-height: 200px; /* Limita la altura */
+    overflow: hidden;
+}
+
+.bomba h1, .valvula h1 {
+    font-size: 1.2rem; /* Reduce el tamaño de los encabezados */
+}
+
+.btn-group button {
+    font-size: 0.85rem; /* Ajusta el tamaño de los botones */
+    padding: 5px 10px;
+}
