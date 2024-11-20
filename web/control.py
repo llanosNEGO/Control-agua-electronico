@@ -68,18 +68,29 @@ def estado_motor():
 
 @app.route('/medir_volumen', methods=['GET'])
 def medir_volumen():
-    """Medir el volumen actual desde el Arduino."""
+    """Medir el volumen actual desde el Arduino y calcular el volumen basado en la distancia."""
     motor_serial = open_serial_port()
 
     if motor_serial and motor_serial.is_open:
         try:
-            motor_serial.write(b'M')  
-            time.sleep(0.5)  
+            motor_serial.write(b'M')  # Enviar comando para medir
+            time.sleep(0.5)          # Esperar respuesta
 
             if motor_serial.in_waiting > 0:
-                volumen = motor_serial.readline().decode('utf-8').strip()
+                # Leer la distancia enviada por el Arduino
+                distancia_raw = motor_serial.readline().decode('utf-8').strip()
                 motor_serial.close()
-                return jsonify({"volumen": volumen}), 200
+                
+                try:
+                    # Convertir la distancia a flotante y calcular volumen
+                    distancia = float(distancia_raw)
+                    volumen = 40.039 * distancia  # Fórmula para calcular volumen
+                    
+                    # Retornar el volumen calculado
+                    return jsonify({"distancia": distancia, "volumen": volumen}), 200
+                except ValueError:
+                    # Error al convertir la distancia
+                    return jsonify({"status": "Datos inválidos del Arduino"}), 500
             else:
                 motor_serial.close()
                 return jsonify({"status": "Sin respuesta del Arduino"}), 500
@@ -88,6 +99,7 @@ def medir_volumen():
             return jsonify({'status': 'Error al medir volumen'}), 500
     else:
         return jsonify({'status': 'Error de conexión serial'}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
