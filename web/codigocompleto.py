@@ -1,10 +1,9 @@
 import serial
 import time
 
-# Configurar el puerto serial
-arduino_port = "COM3"  # Cambiar por el puerto donde está conectado el Arduino
-baud_rate = 9600       # Velocidad del puerto serial
-timeout = 1            # Tiempo de espera en segundos
+arduino_port = "COM5"  
+baud_rate = 9600       
+timeout = 2
 
 # Iniciar la conexión serial
 try:

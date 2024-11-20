@@ -5,45 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electronic Water Control</title>
     <link rel="stylesheet" href="/static/css/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container text-center">
-        <h1 class="titulo">Diseño de un sistema automatizado para control de flujo y volumen de agua en la ciudad de Cajamarca</h1>
-        <div class="row">
-            <div class="col-md-6">
+    <div class="container">
+        <h1 class="titulo">Sistema Automatizado de Control de Agua</h1>
+        <div class="container-todo">
+            <div class="section-left">
                 <div class="tanque">
                     <h4>Control del Volumen del Agua</h4>
                     <h5>Cantidad máxima: 3L</h5>
                     <div class="deposito">
-                        <span style="position: absolute; top: 50%; transform: translateX(250%) translateY(-50%);">2L</span>
+                        <p id="volumen-medido">Volumen actual: Desconocido</p>
                     </div>
                 </div>
-                <div class="dato mt-3">
-                    <label>Ingrese la cantidad a medir:</label>
-                    <input type="text" class="form-control d-inline-block w-50" placeholder="medida">
-                    <button type="button" class="btn btn-primary">Mandar</button>
+                <div class="medir">
+                    <button type="button" class="btn btn-primary" onclick="medirVolumen()">Medir Volumen</button>
                 </div>
             </div>
             <div class="section-rigth">
                 <div class="bomba">
-                    <h1 class="mb-4">Control de la bomba de Agua</h1>
-                    <div class="card shadow-sm p-4">
-                        <p class="status fw-bold" id="motor-status">Estado de la Bomba: <span class="text-secondary">Desconocido</span></p>
-                        <div class="btn-group mt-3" role="group">
-                            <button class="btn btn-success" id="btn-on" onclick="controlMotor('1')" disabled>Encender Bomba</button>
-                            <button class="btn btn-danger" id="btn-off" onclick="controlMotor('A')" disabled>Apagar Bomba</button>
+                    <h4 class="subtitulo">Control de la Bomba de Agua</h4>
+                    <div class="control-bomba">
+                        <p id="motor-status">Estado de la Bomba: <span class="text-secondary">Desconocido</span></p>
+                        <div class="btn-group" role="group">
+                            <button class="btn-success" id="btn-on" onclick="controlMotor('1')">Encender Bomba</button>
+                            <button class="btn-danger" id="btn-off" onclick="controlMotor('A')">Apagar Bomba</button>
                         </div>
                     </div>
                 </div>
                 <div class="valvula">
-                    <h1 class="mb-4">Control de la Valvula para la caida de Agua</h1>
-                    <div class="card shadow-sm p-4">
-                        <p class="status fw-bold" id="motor-status">Estado de la Valvula: <span class="text-secondary">Desconocido</span></p>
-                        <div class="btn-group mt-3" role="group">
-                            <button class="btn btn-success" id="btn-on" onclick="controlMotor('1')" disabled>Encender Valvula</button>
-                            <button class="btn btn-danger" id="btn-off" onclick="controlMotor('0')" disabled>Apagar Valvula</button>
+                    <h4 class="subtitulo">Control de la Válvula</h4>
+                    <div class="control-valvula">
+                        <p id="valvula-status">Estado de la Válvula: <span class="text-secondary">Desconocido</span></p>
+                        <div class="btn-group" role="group">
+                            <button class="btn-success" id="btn-valve-on" onclick="controlMotor('V')">Abrir Válvula</button>
+                            <button class="btn-danger" id="btn-valve-off" onclick="controlMotor('0')">Cerrar Válvula</button>
                         </div>
                     </div>
                 </div>
@@ -52,47 +48,35 @@
     </div>
     <script>
         function controlMotor(action) {
-            fetch(`/control_motor`, {
+            fetch('/control_motor', {
                 method: 'POST',
-                body: new URLSearchParams({
-                    'action': action
-                }),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ action: action })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (action === '1' || action === 'A') {
+                    document.getElementById('motor-status').textContent = `Estado de la Bomba: ${data.status}`;
+                } else if (action === 'V' || action === '0') {
+                    document.getElementById('valvula-status').textContent = `Estado de la Válvula: ${data.status}`;
                 }
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('motor-status').textContent = `Estado del Motor: ${data.status}`;
-                actualizarBotones(data.status);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('motor-status').textContent = 'Estado del Motor: Error de conexión';
-            });
-        }
-
-        function actualizarBotones(status) {
-            if (status === 'Motor encendido') {
-                document.getElementById('btn-on').disabled = true;
-                document.getElementById('btn-off').disabled = false;
-            } else {
-                document.getElementById('btn-on').disabled = false;
-                document.getElementById('btn-off').disabled = true;
-            }
-        }
-
-        function obtenerEstado() {
-            fetch('/estado_motor')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('motor-status').textContent = `Estado del Motor: ${data.status}`;
-                actualizarBotones(data.status);
             })
             .catch(error => console.error('Error:', error));
         }
 
-        window.onload = obtenerEstado;
+        function medirVolumen() {
+            fetch('/medir_volumen', { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('volumen-medido').textContent = `Volumen actual: ${data.volumen} L`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        window.onload = () => {
+            medirVolumen();
+            controlMotor('estado'); 
+        };
     </script>
 </body>
 </html>

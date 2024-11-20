@@ -1,101 +1,139 @@
 body {
-    background-image: url('../image/fondo_agua.jpg'); /* Ruta de la imagen de fondo */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    background-image: url('../image/fondo_agua.png'); /* Ruta de la imagen de fondo */
+    background-size: cover; /* Escala la imagen para que cubra toda el área de la pantalla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Fija la imagen de fondo para que no se mueva al hacer scroll */
+    background-position: center; /* Centra la imagen en la pantalla */
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 .container {
-    margin-top: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 80px;
+    padding: 20px;
+    background: #ffffff74;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .titulo {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    font-size: 1.5rem;
     text-align: center;
-}
-
-.tanque {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #3e3e3e;
     margin-bottom: 20px;
+    font-size: 50px;
 }
 
-.deposito {
-    height: 150px;
-    background-color: #1e90ff;
-    width: 50px;
-    margin: 0 auto;
-    position: relative;
-    border: 2px solid black;
-}
-
-.deposito::before {
-    content: '3L';
-    position: absolute;
-    top: 0;
-    left: 150%;
-    transform: translateX(-50%);
-    color: black;
-}
-
-.deposito::after {
-    content: '1L';
-    position: absolute;
-    bottom: 0;
-    left: 150%;
-    transform: translateX(-50%);
-    color: black;
-}
-
-.dato {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.row {
+.container-todo {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 20px;
 }
 
-.col-md-6 {
-    flex: 1 1 48%;
+/* Left Section */
+.section-left {
+    flex: 1;
+    padding: 20px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
 }
 
-.section-rigth {
-    flex: 1 1 48%;
-    max-width: 48%;
+.tanque h4, .tanque h5 {
+    margin: 0 0 10px 0;
+}
+
+.deposito {
+    padding: 10px;
+    background: #c8e6c9;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.medir {
     margin-top: 20px;
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Right Section */
+.section-rigth {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center; /* Centra horizontalmente el contenido */
+    justify-content: center; /* Centra verticalmente el contenido si el contenedor tiene una altura definida */
 }
 
 .bomba, .valvula {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 15px; /* Disminuye el tamaño del contenido interno */
+    background: #e3f2fd;
     border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido horizontalmente */
+    text-align: center; /* Centra el texto */
+    width: 400px;
+    height: 200px;
+}
+
+.subtitulo {
     margin-bottom: 15px;
-    font-size: 0.9rem; /* Reduce el tamaño de fuente */
-    max-height: 200px; /* Limita la altura */
-    overflow: hidden;
+    color: #333;
+    font-size: 20px;
 }
 
-.bomba h1, .valvula h1 {
-    font-size: 1.2rem; /* Reduce el tamaño de los encabezados */
+/* Control Section */
+.control-bomba, .control-valvula {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center; /* Centra los botones horizontalmente */
 }
 
-.btn-group button {
-    font-size: 0.85rem; /* Ajusta el tamaño de los botones */
-    padding: 5px 10px;
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-success, .btn-danger {
+    padding: 10px 20px; /* Espaciado adicional para botones */
+    font-size: 17px;
+    border: 3px solid transparent;
+    border-radius: 7px;
+    transition: all 0.3s ease; /* Transición suave para efectos */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Color más oscuro al pasar el ratón */
+    border-color: #1e7e34;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Color más oscuro al pasar el ratón */
+    border-color: #bd2130;
 }
